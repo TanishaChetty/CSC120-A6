@@ -60,6 +60,14 @@ public class Car implements CarRequirements {
     }
 
     /**
+     * seeing if a passenger is onboard
+     */
+    public Boolean isOnboard(Passenger p){
+        return this.passengersOnboard.contains(p);
+
+    }
+
+    /**
      * printing all the passengers in a car
      */
     public void printManifest(){
