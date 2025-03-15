@@ -6,6 +6,7 @@ public class Train implements TrainRequirements{
     //Attributes
     private Engine engine;
     private ArrayList <Car> cars;
+    private ArrayList <int> carCheck;
 
     /**
      * Constructor for the Train class
@@ -13,9 +14,11 @@ public class Train implements TrainRequirements{
     public Train(FuelType fuelType, double fuelCapacity, int nCars, int passengerCapacity){
         this.engine = new Engine (fuelType, fuelCapacity, fuelCapacity);
         this.cars = new ArrayList<>();
+        this.carCheck = new ArrayList<>();
         for (int i = 0; i < nCars; i++){
             Car car = new Car(passengerCapacity);
             cars.add(car);
+            carCheck.add(i);
         }
  
     }
@@ -33,6 +36,23 @@ public class Train implements TrainRequirements{
     public Engine getEngine(){
         return this.engine;
     }
+
+
+    /**
+     * Accessor for number of cars on train
+     */
+    public int getCarNumber(){
+        return this.cars.size();
+    }
+
+    /**
+     * Accessor for car number
+     */
+    public int getCarCheck(){
+        return this.carCheck();
+    }
+    
+
 
     /**
      * Accessor for max capacity
@@ -62,6 +82,7 @@ public class Train implements TrainRequirements{
       */
       public void printManifest(){
         for (int i = 0; i < cars.size(); i ++){
+           // this.carCheck.add(i);
             cars.get(i).printManifest();
             System.out.println("\n");
         }

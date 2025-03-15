@@ -82,6 +82,8 @@ public class Car implements CarRequirements {
                 allPassengers = allPassengers + (i+1) + ". " + person +"\n";
             }
             System.out.println(allPassengers);
+
+
         }
 
   
@@ -93,7 +95,11 @@ public class Car implements CarRequirements {
 
     public static void main(String[] args){
         //Car myCar = new Car()
+        
+
     }
+
+    
 
 
     

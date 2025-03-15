@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -8,21 +9,26 @@ public class TrainTest {
 
     public Train x;
 
-    @Before
-    public void setup() {
-        this.x = new Train();
-    }
 
     // Engine Tests
     @Test
     public void testEngineConstructor() {
-        Engine testEngine = new Engine(FuelType.ELECTRIC, 0., 100.);
-        String expectedString = "Engine has fuel type ELECTRIC, current fuel level 0, and max fuel level: 100";
+        Engine engine = new Engine(FuelType.ELECTRIC, 0., 100.);
+        assert engine.getFuelType() == FuelType.ELECTRIC;
+        assert engine.getCurrentFuel() == 0.;
+        assert engine.getMaxFuel() == 100.;
     }
 
     @Test
     public void testEngineGo() {
-        fail();
+        Engine engine = new Engine(FuelType.ELECTRIC, 0., 100.);
+        assertFalse (engine.go());
+        Engine otherEngine = new Engine(FuelType.ELECTRIC, 5., 100.);
+        assertFalse(otherEngine.go());
+        Engine e = new Engine(FuelType.ELECTRIC, 100., 100.);
+        assertTrue(e.go());
+        assert e.getCurrentFuel() == 95;
+
     }
 
     // Car Tests
@@ -41,9 +47,11 @@ public class TrainTest {
         Passenger p = new Passenger ("Pete");
         Car c = new Car (10);
         assertTrue (c.isOnboard(p));
-        c.addPassenger(p);
+        c.removePassenger(p);
         assertFalse (c.isOnboard(p));
-        // somehow make sure it doesn't go negative????????
+        Car x = new Car (0);
+        assertFalse(x.removePassenger(p));
+
     }
 
     // Passenger Tests
@@ -59,42 +67,53 @@ public class TrainTest {
     @Test
     public void testPassengerBoardCarFull() {
         Passenger p = new Passenger ("Pete");
-        Car c = new Car (10);
+        Car c = new Car (0);
         assertFalse (c.isOnboard(p));
         c.addPassenger(p);
         assertFalse (c.isOnboard(p));
     }
 
     // Train Tests
-    @Test //bruh idk
+    @Test
     public void testTrainConstructor() {
-        Train tesTrain = 
-        //AAGGGHHHHHHHHHH
-
-        this.engine = new Engine (FuelType.ELECTRIC, 20, 300);
-        this.cars = new ArrayList<>();
-        for (int i = 0; i < nCars; i++){
-            Car car = new Car(passengerCapacity);
-            cars.add(car);
-        }
+        Train testTrain = new Train(FuelType.ELECTRIC, 200., 3, 30);
+        assertTrue(testTrain.getCarNumber() == 3);
+        assertTrue(testTrain.getEngine().getFuelType() == FuelType.ELECTRIC);
+        assertTrue(testTrain.getEngine().getMaxFuel() == 200);
+        assertTrue(testTrain.getMaxCapacity() == 90);
+        
     }
 
     @Test
     public void testTrainPassengerCount() {
-        Integer testCapac = 33;
-        Integer expectedCapac = 55; //idk
+        Train testTrain = new Train(FuelType.ELECTRIC, 200., 3, 30);
+        Passenger p = new Passenger ("Pete");
+        Car c = testTrain.getCar(2);
+        assertFalse (c.isOnboard(p));
+        c.addPassenger(p);
+        assertTrue(c.seatsRemaining() == 29);
+        
     }
 
     @Test
     public void testTrainGetCar() {
-        fail();
+        Train testTrain = new Train(FuelType.ELECTRIC, 200., 3, 30);
+        Car car = testTrain.getCar(1);
+        Car c = testTrain.getCar(2);
+        assertFalse (c == car);
+        assertTrue(car == testTrain.getCar(1));
+
     }
 
     @Test
     public void testTrainPrintManifest() {
-        Passenger p = new Passenger ("Pete");
-        Passenger h = new Passenger ("Julia");
-        expectedManifest = "1. Pete \n 2. Julia";
+        Train t = new Train(FuelType.ELECTRIC, 100, 3, 10);
+        t.printManifest();
+        int[] expectedResult = {0,1,2};
+        assertEquals(expectedResult.length, t.getCarCheck().length);
+        for (int i = 0; < expectedResult.length; i++){
+            assertEquals(expectedResult[i], t.getCarCheck()[i]);
+        }
 
     }
     
