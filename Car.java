@@ -53,9 +53,9 @@ public class Car implements CarRequirements {
     public Boolean removePassenger(Passenger passenger){
         if (passengersOnboard.contains(passenger)){
             this.passengersOnboard.remove(passenger);
-            return false;
-        } else{
             return true;
+        } else{
+            return false;
         }
     }
 

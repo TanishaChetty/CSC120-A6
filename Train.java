@@ -6,7 +6,7 @@ public class Train implements TrainRequirements{
     //Attributes
     private Engine engine;
     private ArrayList <Car> cars;
-    private ArrayList <int> carCheck;
+    private ArrayList <Integer> carCheck;
 
     /**
      * Constructor for the Train class
@@ -43,13 +43,6 @@ public class Train implements TrainRequirements{
      */
     public int getCarNumber(){
         return this.cars.size();
-    }
-
-    /**
-     * Accessor for car number
-     */
-    public int getCarCheck(){
-        return this.carCheck();
     }
     
 

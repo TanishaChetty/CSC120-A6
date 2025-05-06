@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 
@@ -35,10 +37,9 @@ public class TrainTest {
     @Test ()
     public void testCarAddPassenger() {
         Passenger p = new Passenger ("Pete");
-        Car c = new Car (0);
+        Car c = new Car (1);
         assertFalse (c.isOnboard(p));
-        c.addPassenger(p);
-        assertTrue (c.isOnboard(p));
+        assertTrue (c.addPassenger(p));
 
     }
 
@@ -46,6 +47,7 @@ public class TrainTest {
     public void testCarRemovePassenger() {
         Passenger p = new Passenger ("Pete");
         Car c = new Car (10);
+        c.addPassenger(p);
         assertTrue (c.isOnboard(p));
         c.removePassenger(p);
         assertFalse (c.isOnboard(p));
@@ -107,13 +109,14 @@ public class TrainTest {
 
     @Test
     public void testTrainPrintManifest() {
-        Train t = new Train(FuelType.ELECTRIC, 100, 3, 10);
+        Train t = new Train(FuelType.ELECTRIC, 100, 1, 10);
+        Passenger p = new Passenger ("Pete");
+        p.boardCar(t.getCar(0));
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        PrintStream memoryOut = new PrintStream(buffer);
+        System.setOut(memoryOut);
         t.printManifest();
-        int[] expectedResult = {0,1,2};
-        assertEquals(expectedResult.length, t.getCarCheck().length);
-        for (int i = 0; < expectedResult.length; i++){
-            assertEquals(expectedResult[i], t.getCarCheck()[i]);
-        }
+        assertEquals("1. Pete", buffer.toString().strip());
 
     }
     
